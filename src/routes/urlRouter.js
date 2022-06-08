@@ -1,10 +1,10 @@
 import { Router } from "express";
-import { postUrl } from "../controllers/urlController.js";
+import { getUrlId, postUrl } from "../controllers/urlController.js";
 import { tokenValidation } from "../middlewares/tokenValidation.js";
-import { urlMiddleware } from "../middlewares/urlMiddleware.js";
+import { urlIdMiddleware, urlMiddleware } from "../middlewares/urlMiddleware.js";
 
 const urlRouter = Router()
-urlRouter.use(tokenValidation)
 
-urlRouter.post('/urls/shorten', urlMiddleware, postUrl)
+urlRouter.post('/urls/shorten', urlMiddleware, tokenValidation, postUrl)
+urlRouter.get('/urls/:id', urlIdMiddleware, getUrlId)
 export default urlRouter
