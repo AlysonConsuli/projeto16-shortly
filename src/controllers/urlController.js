@@ -33,8 +33,12 @@ export const getUrlId = async (req, res) => {
 }
 
 export const getShortUrl = async (req, res) => {
-    const { url } = res.locals
+    const { dbUrl } = res.locals
+    const { url, shortUrl, visitCount } = dbUrl
     try {
+        await db.query(`
+        UPDATE urls SET "visitCount"=${visitCount + 1}
+        WHERE "shortUrl" = $1`, [shortUrl])
         res.redirect(url)
     } catch {
         res.sendStatus(500)

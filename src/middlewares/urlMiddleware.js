@@ -30,12 +30,12 @@ export const shortUrlMiddleware = async (req, res, next) => {
     const { shortUrl } = req.params
     try {
         const url = await db.query(`
-        SELECT url, "shortUrl" FROM urls 
+        SELECT url, "shortUrl", "visitCount" FROM urls 
         WHERE "shortUrl" = $1`, [shortUrl])
         if (!url.rows[0]?.shortUrl) {
             return res.status(404).send('Não existe esse url encurtado!')
         }
-        res.locals.url = url.rows[0].url
+        res.locals.dbUrl = url.rows[0]
         next()
     } catch {
         res.sendStatus(500)
