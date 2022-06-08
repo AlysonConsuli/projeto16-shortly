@@ -7,9 +7,5 @@ export const urlMiddleware = async (req, res, next) => {
     if (validation.error) {
         return res.status(422).send(validation.error.details.map(e => e.message))
     }
-    try {
-        next()
-    } catch {
-        res.sendStatus(500)
-    }
+    next()
 }
