@@ -25,3 +25,19 @@ export const urlIdMiddleware = async (req, res, next) => {
         res.sendStatus(500)
     }
 }
+
+export const shortUrlMiddleware = async (req, res, next) => {
+    const { shortUrl } = req.params
+    try {
+        const url = await db.query(`
+        SELECT url, "shortUrl" FROM urls 
+        WHERE "shortUrl" = $1`, [shortUrl])
+        if (!url.rows[0]?.shortUrl) {
+            return res.status(404).send('Não existe esse url encurtado!')
+        }
+        res.locals.url = url.rows[0].url
+        next()
+    } catch {
+        res.sendStatus(500)
+    }
+}

@@ -31,3 +31,12 @@ export const getUrlId = async (req, res) => {
         res.sendStatus(500)
     }
 }
+
+export const getShortUrl = async (req, res) => {
+    const { url } = res.locals
+    try {
+        res.redirect(url)
+    } catch {
+        res.sendStatus(500)
+    }
+}
