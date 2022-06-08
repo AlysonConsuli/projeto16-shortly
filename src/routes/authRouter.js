@@ -1,6 +1,6 @@
 import { Router } from "express";
 import { postSignin, postUser } from "../controllers/authController.js";
-import { signinMiddleware, signupMiddleware } from "../middlewares/authController.js";
+import { signinMiddleware, signupMiddleware } from "../middlewares/authMiddleware.js";
 
 const authRouter = Router()
 
