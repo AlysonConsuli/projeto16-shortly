@@ -25,7 +25,7 @@ export const postSignin = async (req, res) => {
         await db.query(`
         INSERT INTO sessions ("userId", token)
         VALUES ($1, $2)`, [user.id, token])
-        res.send(token).status(200)
+        res.send(token)
     } catch (e) {
         console.log(e)
         res.sendStatus(500)
